@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Pizza Shop</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #fff8f0;
+    color: #333;
+  }
+  header {
+    background-color: #d9412f;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+  }
+  .pizza {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 15px;
+    width: 280px;
+    padding: 15px;
+    text-align: center;
+  }
+  .pizza img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .pizza h3 {
+    margin: 10px 0 5px 0;
+  }
+  .price {
+    font-weight: bold;
+    color: #d9412f;
+  }
+  button {
+    background-color: #d9412f;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: #b33023;
+  }
+  #orderSummary {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff4e6;
+    border-radius: 10px;
+    padding: 15px;
+  }
+  footer {
+    background-color: #d9412f;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+  }
+  @media (max-width: 600px) {
+    .menu {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Welcome to Your Pizza Shop</h1>
+  <p>Fresh, delicious pizzas made just for you!</p>
+</header>
+
+<section class="menu">
+  <div class="pizza" data-name="Margherita" data-price="100">
+    <img src="https://cdn.example.com/margherita.jpg" alt="Margherita Pizza">
+    <h3>Margherita</h3>
+    <p>Classic cheese and tomato</p>
+    <p class="price">₹100</p>
+    <button onclick="addToOrder('Margherita', 100)">Add to Order</button>
+  </div>
+
+  <div class="pizza" data-name="Pepperoni" data-price="150">
+    <img src="https://cdn.example.com/pepperoni.jpg" alt="Pepperoni Pizza">
+    <h3>Pepperoni</h3>
+    <p>Spicy pepperoni and cheese</p>
+    <p class="price">₹150</p>
+    <button onclick="addToOrder('Pepperoni', 150)">Add to Order</button>
+  </div>
+
+  <div class="pizza" data-name="Veggie Delight" data-price="120">
+    <img src="https://cdn.example.com/veggie.jpg" alt="Veggie Delight Pizza">
+    <h3>Veggie Delight</h3>
+    <p>Fresh veggies and cheese</p>
+    <p class="price">₹120</p>
+    <button onclick="addToOrder('Veggie Delight', 120)">Add to Order</button>
+  </div>
+</section>
+
+<section id="orderSummary">
+  <h2>Your Order</h2>
+  <ul id="orderList"></ul>
+  <p><strong>Total: ₹<span id="totalPrice">0</span></strong></p>
+  <button onclick="placeOrder()">Place Order</button>
+</section>
+
+<footer>
+  <p>Contact us: 123-456-7890 | 123 Pizza Street, Food City</p>
+  <p>Follow us on social media!</p>
+</footer>
+
+<script>
+  const order = [];
+  const orderList = document.getElementById('orderList');
+  const totalPriceEl = document.getElementById('totalPrice');
+
+  function addToOrder(name, price) {
+    order.push({name, price});
+    renderOrder();
+  }
+
+  function renderOrder() {
+    orderList.innerHTML = '';
+    let total = 0;
+    order.forEach(item => {
+      total += item.price;
+      const li = document.createElement('li');
+      li.textContent = `${item.name} - ₹${item.price}`;
+      orderList.appendChild(li);
+    });
+    totalPriceEl.textContent = total;
+  }
+
+  function placeOrder() {
+    if(order.length === 0) {
+      alert('Please add items to your order.');
+      return;
+    }
+    alert(`Thank you for your order! Total: ₹${totalPriceEl.textContent}`);
+    order.length = 0;
+    renderOrder();
+  }
+</script>
+
+</body>
+</html>
